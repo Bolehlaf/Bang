@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Dealer
+  - Hand
   layers:
   - Default
   - TransparentFX

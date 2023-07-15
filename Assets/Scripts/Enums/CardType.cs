@@ -1,5 +1,5 @@
 public enum CardType
 {
-    brown,
-    blue
+    Brown,
+    Blue
 }

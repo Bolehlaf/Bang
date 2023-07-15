@@ -7,7 +7,13 @@ namespace Assets.Scripts.Cards
     {
         public void Drink()
         {
-            _owner.Heal();
+            Owner.Heal();
+        }
+
+        public override void Initialize(int value, CardSuit suit)
+        {
+            base.Initialize(value, suit);
+            _cardType = CardType.Brown;
         }
     }
 }
