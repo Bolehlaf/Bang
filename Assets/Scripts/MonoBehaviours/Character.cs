@@ -6,12 +6,10 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    [SerializeField] private Dealer _dealer;
-
+    protected Dealer _dealer;
     protected int _maxHealth = 4;
     protected int _health;
     protected Role _role;
-    protected int _seat;
     protected List<Card> _hand = new List<Card>();
     protected List<Card> _statusCards = new List<Card>();
     protected bool _onTurn = false;
@@ -20,6 +18,13 @@ public class Character : MonoBehaviour
 
     private bool _underFire = false;
     private bool _discardPhase = false;
+
+    public int Seat { get; protected set; }
+
+    public void Start()
+    {
+        _dealer = GameObject.FindWithTag("Dealer").GetComponent<Dealer>();
+    }
 
     public void Update()
     {
