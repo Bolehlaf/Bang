@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Dealer
   - Hand
+  - GameControler
   layers:
   - Default
   - TransparentFX

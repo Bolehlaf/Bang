@@ -1,12 +1,14 @@
+using Assets.Scripts.Cards;
 using Assets.Scripts.MonoBehaviours;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 using Random = System.Random;
 
-public class GameController : MonoBehaviour
+public class GameControler : MonoBehaviour
 {
     public List<GameObject> Seats = new List<GameObject>();
     public List<Character> Players = new List<Character>();
@@ -14,6 +16,10 @@ public class GameController : MonoBehaviour
     public Character CurrentPlayer;
     public int startPlayersCount;
     [SerializeField] private Dealer _dealer;
+
+    private bool _choosingBangTarget;
+    public Character Target;
+    private Bang activeBang;
 
     #region Character roles
 
@@ -28,12 +34,35 @@ public class GameController : MonoBehaviour
 
     #endregion Character roles
 
+    public void Update()
+    {
+        if (_choosingBangTarget)
+        {
+            if (Target != null)
+            {
+                _choosingBangTarget = false;
+                Shoot();
+            }
+        }
+    }
+
     public void StartGame()
     {
         if (startPlayersCount < 4 || startPlayersCount > 8)
             return;
-        _dealer.Shuffle();
         InstantiatePlayers();
+    }
+
+    public void ChoosingBangTarget(Bang card)
+    {
+        _choosingBangTarget = true;
+        activeBang = card;
+    }
+    
+    public void SelectBangTarget(Character target)
+    {
+        if (_choosingBangTarget)
+            Target = target;
     }
 
     private void InstantiatePlayers()
@@ -45,8 +74,15 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < startPlayersCount;  i++)
         {
             var character = Instantiate(prefab, Seats[i].transform).GetComponent<Character>();
-            character.Initialize(roles.Pop());
-            character.Seat = i;
+            character.Initialize(roles.Pop(), i);
         }
+    }
+
+    private void Shoot()
+    {
+        Target.UnderFire();
+        Target = null;
+        _choosingBangTarget = false;
+        activeBang = null;
     }
 }

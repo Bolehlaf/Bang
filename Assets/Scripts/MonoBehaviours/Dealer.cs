@@ -28,7 +28,7 @@ namespace Assets.Scripts.MonoBehaviours
                 {
                     card = Instantiate(prefab).GetComponent<Card>();
                     card.Initialize(random.Next(2, 15), (CardSuit)random.Next(4));
-                    _deck.Push(card);
+                    _discard.Push(card);
                 }
             }
         }
@@ -43,7 +43,7 @@ namespace Assets.Scripts.MonoBehaviours
         {
             List<Card> drawnCards = new List<Card>();
 
-            for (int i = 0; i < amount - 1; i++)
+            for (int i = 0; i < amount; i++)
             {
                 drawnCards.Add(_deck.Pop());
             }

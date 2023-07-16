@@ -258,7 +258,8 @@ MonoBehaviour:
   ActivePlayers: []
   CurrentPlayer: {fileID: 0}
   startPlayersCount: 0
-  _dealer: {fileID: 0}
+  _dealer: {fileID: 1271586350}
+  Target: {fileID: 0}
 --- !u!1 &215875794
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,7 +508,7 @@ GameObject:
   - component: {fileID: 1047139508}
   m_Layer: 5
   m_Name: GameControler
-  m_TagString: Untagged
+  m_TagString: GameControler
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -557,6 +558,7 @@ MonoBehaviour:
   CurrentPlayer: {fileID: 0}
   startPlayersCount: 7
   _dealer: {fileID: 1271586350}
+  Target: {fileID: 0}
 --- !u!1 &1266002725
 GameObject:
   m_ObjectHideFlags: 0
@@ -1382,9 +1384,9 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
+  m_Spacing: 5
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0

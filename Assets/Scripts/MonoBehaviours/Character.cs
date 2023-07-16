@@ -9,6 +9,7 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     protected Dealer _dealer;
+    public GameControler GameControler;
     public int _maxHealth = 4;
     public int _health;
     public Role _role;
@@ -26,6 +27,8 @@ public class Character : MonoBehaviour
     public int Seat { get; set; }
 
     [SerializeField] private TextMeshProUGUI _text;
+
+    #region Unity event methods
 
     public void Update()
     {
@@ -50,9 +53,19 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void Initialize(Role role)
+    #endregion Unity event methods
+
+    #region Public methods
+
+    public void Initialize(Role role, int seat)
     {
         _dealer = GameObject.FindWithTag("Dealer").GetComponent<Dealer>();
+        GameControler = GameObject.FindWithTag("GameControler").GetComponent<GameControler>();
+        Seat = seat;
+        if (Seat == 0)
+        {
+            _hand = GameObject.FindWithTag("Hand").transform;
+        }
 
         _role = role;
         DrawCards(_maxHealth);
@@ -60,10 +73,7 @@ public class Character : MonoBehaviour
         _health = _maxHealth;
         _range = 1;
         
-        if (Seat == 0)
-        {
-            _hand = GameObject.FindWithTag("Hand").transform;
-        }
+        
     }
 
     public void DrawCards(int amount)
@@ -72,6 +82,8 @@ public class Character : MonoBehaviour
         foreach (var card in cards)
         {
             card.transform.SetParent(_hand);
+            card.transform.localScale = Vector3.one;
+            card.Owner = this;
         }
         _handCards.AddRange(cards);
     }
@@ -97,11 +109,13 @@ public class Character : MonoBehaviour
     public void Discard(Card card)
     {
         _dealer.Discard(card);
+        card.transform.parent = null;
     }
 
     public void UnderFire()
     {
-        _underFire = true;
+        Wound();
+        //_underFire = true;
     }
 
     public void Pass()
@@ -122,6 +136,15 @@ public class Character : MonoBehaviour
         _onTurn = false;
     }
 
+    public void SelectAsTarget()
+    {
+        GameControler.Target = this;
+    }
+
+    #endregion Public methods
+
+    #region Private methods
+
     private void Die()
     {
     }
@@ -136,4 +159,6 @@ public class Character : MonoBehaviour
         info.Append(_health.ToString());
         _text.text = info.ToString();
     }
+
+    #endregion Private methods
 }
