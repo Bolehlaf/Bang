@@ -43,9 +43,9 @@ public class Character : MonoBehaviour
             }
         }
 
-        if (_discardPhase) 
+        if (_discardPhase)
         {
-            if (_selectedCard != null) 
+            if (_selectedCard != null)
             {
                 _dealer.Discard(_selectedCard);
             }
@@ -72,8 +72,6 @@ public class Character : MonoBehaviour
         _maxHealth = role == Role.Sherrif ? _maxHealth + 1 : _maxHealth;
         _health = _maxHealth;
         _range = 1;
-        
-        
     }
 
     public void DrawCards(int amount)
@@ -92,7 +90,7 @@ public class Character : MonoBehaviour
     {
         _health--;
 
-        if (_health <= 0 )
+        if (_health <= 0)
         {
             Die();
         }
@@ -139,6 +137,23 @@ public class Character : MonoBehaviour
     public void SelectAsTarget()
     {
         GameControler.Target = this;
+    }
+
+    public void SetAsCurrentPlayer()
+    {
+        _hand = GameObject.FindWithTag("Hand").transform;
+
+        while (_hand.childCount > 0)
+        {
+            Transform child = _hand.GetChild(0);
+            child.SetParent(null);
+        }
+
+        foreach (Card card in _handCards)
+        {
+            card.transform.SetParent(_hand);
+            card.transform.localScale = Vector3.one;
+        }
     }
 
     #endregion Public methods

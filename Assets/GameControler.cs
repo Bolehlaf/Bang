@@ -21,6 +21,8 @@ public class GameControler : MonoBehaviour
     public Character Target;
     private Bang activeBang;
 
+    private bool _choosingSwitchCharacter;
+
     #region Character roles
 
     Dictionary<int, List<Role>> ingameRoles = new Dictionary<int, List<Role>>()
@@ -44,6 +46,15 @@ public class GameControler : MonoBehaviour
                 Shoot();
             }
         }
+
+        if (_choosingSwitchCharacter)
+        {
+            if (Target != null)
+            {
+                _choosingSwitchCharacter = false;
+                SwitchCurrentCharacter(Target);
+            }
+        }
     }
 
     public void StartGame()
@@ -65,6 +76,11 @@ public class GameControler : MonoBehaviour
             Target = target;
     }
 
+    public void ChoosingSwitchCharacter()
+    {
+        _choosingSwitchCharacter = true;
+    }
+
     private void InstantiatePlayers()
     {
         var prefab = Resources.Load("Game Character");
@@ -84,5 +100,12 @@ public class GameControler : MonoBehaviour
         Target = null;
         _choosingBangTarget = false;
         activeBang = null;
+    }
+
+    private void SwitchCurrentCharacter(Character character)
+    {
+        character.SetAsCurrentPlayer();
+        Target = null;
+        _choosingSwitchCharacter = false;
     }
 }
