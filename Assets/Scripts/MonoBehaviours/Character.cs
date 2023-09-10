@@ -33,7 +33,7 @@ public class Character : MonoBehaviour
     public void Update()
     {
         UpdateInfo();
-        if (_underFire)
+        if (_underFire && _selectedCard != null)
         {
             if (_selectedCard.GetType() == typeof(Mancato))
             {
